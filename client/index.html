@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Rooms!</title>
+    
+
+    <style>
+        li{
+            margin-bottom: 3px;
+        }
+        .wrapper{
+            display: flex;
+            margin-top: 20px;
+        }
+        #lists{
+            display: flex;
+            flex-direction: column;
+            margin: 0 10px;
+            height: 300px;
+            width: 200px;
+        }
+        #all-list, #room-list{
+            width: 100%;
+            height: 100%;
+            outline: 1px solid black;
+            overflow-y: scroll;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        #all-list{
+            margin-bottom: 5px;
+        }
+        #room-list{
+            margin-top: 5px;
+        }
+        #message-container{
+            width: 80vw;
+            max-width: 500px;
+            height: 300px;
+            outline: 1px solid black;
+            overflow-y: scroll;
+        }
+        .message{
+            margin: 3px 0;
+            margin-left: 5px;
+        }
+        .you{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="message-container"></div>
+        <div id="lists">
+            All online:
+            <ul id="all-list"></ul>
+            Currently in room:
+            <ul id="room-list"></ul>
+        </div>
+    </div>
+    <br>
+    <form id="form">
+        <label for="message-input">Message: </label>
+        <input type="text" id="message-input">
+        <button type="submit" id="send-button" >Send</button>
+        <br> <br>
+        <label for="room-input">Room: </label>
+        <input type="text" id="room-input">
+        <button type="button" id="room-button" >Join</button>
+        <button type="button" id="leave-button" >Leave</button>
+        <br> <br>
+    </form>
+    <script src="script.js" type="module"></script>
+</body>
+</html>
