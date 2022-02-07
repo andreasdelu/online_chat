@@ -86,6 +86,7 @@ joinRoomButton.addEventListener("click", () => {
         displayMessage(message);
     })
     roomInput.readOnly = true;
+    updateScroll();
 })
 leaveRoomButton.addEventListener("click", () => {
     const room = roomInput.value;
@@ -95,6 +96,7 @@ leaveRoomButton.addEventListener("click", () => {
         displayMessage(message);
     })
     roomInput.readOnly = false;
+    updateScroll();
 })
 /* nameButton.addEventListener("click", () => {
     if (nameInput.value == storage.getItem("nickname")) {
