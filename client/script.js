@@ -1,4 +1,3 @@
-import { sanitizePackageName } from "snowpack/lib/cjs/util";
 import { io} from "socket.io-client"
 
 const joinRoomButton = document.getElementById("room-button");
@@ -10,10 +9,20 @@ const allList = document.getElementById("all-list");
 const roomList = document.getElementById("room-list");
 
 
-const socket = io("http://localhost:3000")
+
+const socket = io("http://10.44.137.90:3000")
 
 const storage = window.sessionStorage;
 
+function updateScroll(){
+    const messageContainer = document.getElementById("message-container");
+    console.log(messageContainer.scrollTop + 300)
+    console.log("height" + messageContainer.scrollHeight)
+    if (messageContainer.scrollTop + 350 > messageContainer.scrollHeight) {
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+    else return;
+}
 
 socket.on("connect", () => {
     displayMessage(`Connected!`);
@@ -50,6 +59,7 @@ function setName() {
 
 socket.on("recieve-message", (message) => {
     displayMessage(message);
+    updateScroll();
 })
 
 socket.on("populate-all", online => {
@@ -69,6 +79,7 @@ form.addEventListener("submit", e => {
     yourMessage(message)
     socket.emit("send-message", message, room)
     messageInput.value = ""
+    updateScroll();
 })
 
 joinRoomButton.addEventListener("click", () => {
@@ -85,7 +96,7 @@ leaveRoomButton.addEventListener("click", () => {
         displayMessage(message);
     })
 })
-nameButton.addEventListener("click", () => {
+/* nameButton.addEventListener("click", () => {
     if (nameInput.value == storage.getItem("nickname")) {
         const nickname = nameInput.value;
         displayMessage("Your nickname is already: " + nickname);
@@ -101,7 +112,7 @@ nameButton.addEventListener("click", () => {
         socket.emit("set-name", nickname);
         nameInput.value = nickname;
     }
-})
+}) */
 
 function displayMessage(message) {
     const div = document.createElement("div")
@@ -115,6 +126,7 @@ function yourMessage(message) {
     div.textContent = "You: " + message
     div.classList.add("you")
     document.getElementById("message-container").append(div)
+    
 }
 
 function populateAll(list) {

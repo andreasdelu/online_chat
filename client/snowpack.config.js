@@ -10,7 +10,7 @@ module.exports = {
     /* ... */
   ],
   packageOptions: {
-    /* ... */
+    polyfillNode: true
   },
   devOptions: {
     /* ... */
