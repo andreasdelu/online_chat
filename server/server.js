@@ -32,10 +32,10 @@ io.on("connection", socket => {
     socket.on("disconnect", (reason) => {
         console.log("User disconnected: " + reason);
         getSockets();
+        io.emit("recieve-message", socket.username + ": Left the chat")
     })
     socket.on("is-typing", (state) =>{ 
         if (state === true) {
-            console.log(socket.username + " is typing!")
             io.emit("user-typing", socket.username + " is typing...")
         }
         else if (state === false) {

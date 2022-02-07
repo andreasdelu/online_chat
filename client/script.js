@@ -97,15 +97,22 @@ form.addEventListener("submit", e => {
     socket.emit("send-message", message, room)
     messageInput.value = ""
     updateScroll();
+    socket.emit("is-typing", false)
 })
 
 joinRoomButton.addEventListener("click", () => {
+
     const room = roomInput.value;
-    socket.emit("join-room", room, message => {
-        displayMessage(message);
-    })
-    roomInput.readOnly = true;
-    updateScroll();
+    if (room !=='') {
+        socket.emit("join-room", room, message => {
+            displayMessage(message);
+        })
+        roomInput.readOnly = true;
+        updateScroll();
+        joinRoomButton.disabled = true
+        leaveRoomButton.disabled = false
+    }
+    else return;
 })
 leaveRoomButton.addEventListener("click", () => {
     const room = roomInput.value;
@@ -115,21 +122,23 @@ leaveRoomButton.addEventListener("click", () => {
         displayMessage(message);
     })
     roomInput.readOnly = false;
+    joinRoomButton.disabled = false;
+    leaveRoomButton.disabled = true
     updateScroll();
 })
 
 function displayMessage(message) {
-    const div = document.createElement("div")
-    div.textContent = timeSet() + " · " +  message
-    div.classList.add("message")
-    document.getElementById("message-container").append(div)
+    const p = document.createElement("p")
+    p.textContent = timeSet() + " · " +  message
+    p.classList.add("message")
+    document.getElementById("message-container").append(p)
 }
 
 function yourMessage(message) {
-    const div = document.createElement("div")
-    div.textContent = timeSet() + " · " + "You: " + message
-    div.classList.add("you")
-    document.getElementById("message-container").append(div)
+    const p = document.createElement("p")
+    p.textContent = timeSet() + " · " + "You: " + message
+    p.classList.add("you")
+    document.getElementById("message-container").append(p)
     
 }
 
