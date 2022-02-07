@@ -16,8 +16,6 @@ const storage = window.sessionStorage;
 
 function updateScroll(){
     const messageContainer = document.getElementById("message-container");
-    console.log(messageContainer.scrollTop + 300)
-    console.log("height" + messageContainer.scrollHeight)
     if (messageContainer.scrollTop + 350 > messageContainer.scrollHeight) {
         messageContainer.scrollTop = messageContainer.scrollHeight;
     }
@@ -87,6 +85,7 @@ joinRoomButton.addEventListener("click", () => {
     socket.emit("join-room", room, message => {
         displayMessage(message);
     })
+    roomInput.readOnly = true;
 })
 leaveRoomButton.addEventListener("click", () => {
     const room = roomInput.value;
@@ -95,6 +94,7 @@ leaveRoomButton.addEventListener("click", () => {
     socket.emit("leave-room", room, message => {
         displayMessage(message);
     })
+    roomInput.readOnly = false;
 })
 /* nameButton.addEventListener("click", () => {
     if (nameInput.value == storage.getItem("nickname")) {
