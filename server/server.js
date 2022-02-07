@@ -33,6 +33,15 @@ io.on("connection", socket => {
         console.log("User disconnected: " + reason);
         getSockets();
     })
+    socket.on("is-typing", (state) =>{ 
+        if (state === true) {
+            console.log(socket.username + " is typing!")
+            io.emit("user-typing", socket.username + " is typing...")
+        }
+        else if (state === false) {
+            io.emit("user-stop-typing")
+        }
+    })
 })
 
 async function getSockets() {

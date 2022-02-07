@@ -5,15 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat with Rooms!</title>
-    
-
     <style>
+        body{
+            max-width: fit-content;
+            margin: 0 auto;
+            /* background-image: url("images/arto.jpeg"); */
+            background-size: cover;
+        }
+        h1{
+            text-align: center;
+        }
         li{
             margin-bottom: 3px;
+            margin-left: 3px;
         }
         .wrapper{
             display: flex;
+            margin: 0 20px;
             margin-top: 20px;
+            position: relative;
+        }
+        #form{
+            width: fit-content;
+            margin-left: 20px;
+            
         }
         #lists{
             display: flex;
@@ -30,6 +45,7 @@
             list-style: none;
             padding: 0;
             margin: 0;
+            background-color: white;
         }
         #all-list{
             margin-bottom: 5px;
@@ -43,6 +59,7 @@
             height: 300px;
             outline: 1px solid black;
             overflow-y: scroll;
+            background-color: white;
         }
         .message, .you{
             margin: 3px 0;
@@ -51,12 +68,31 @@
         .you{
             font-weight: bold;
         }
+        #typing{
+            width: 80vw;
+            max-width: fit-content;
+            background-color: lightgray;
+            position: absolute;
+            bottom: 0;
+            font-size: 0.8rem;
+            list-style: none;
+            margin-bottom: 0;
+            
+        }
+        #display{
+            background-size: contain;
+            width: 500px;
+            height: 500px;
+        }
     </style>
 </head>
 <body>
-    <h1>Discord 2.0</h1>
+    <h1>Arto 2.0</h1>
+    
     <div class="wrapper">
         <div id="message-container"></div>
+        <div id="typing">
+        </div>
         <div id="lists">
             All online:
             <ul id="all-list"></ul>

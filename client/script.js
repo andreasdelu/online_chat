@@ -7,12 +7,31 @@ const roomInput = document.getElementById("room-input");
 const form = document.getElementById("form");
 const allList = document.getElementById("all-list");
 const roomList = document.getElementById("room-list");
+const userTyping = document.getElementById("typing");
 
 
 
 const socket = io("http://10.44.137.90:3000")
 
 const storage = window.sessionStorage;
+
+function timeSet() {
+    let date = new Date();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    
+    if (minutes <= 9) {
+        minutes = "0" + minutes;
+    }
+    if (hours <= 9) {
+        hours = "0" + hours;
+    }
+    
+    let time = hours + ":" + minutes;
+
+    return time;
+}
+
 
 function updateScroll(){
     const messageContainer = document.getElementById("message-container");
@@ -98,34 +117,17 @@ leaveRoomButton.addEventListener("click", () => {
     roomInput.readOnly = false;
     updateScroll();
 })
-/* nameButton.addEventListener("click", () => {
-    if (nameInput.value == storage.getItem("nickname")) {
-        const nickname = nameInput.value;
-        displayMessage("Your nickname is already: " + nickname);
-    }
-    else {
-        const nickname = nameInput.value;
-        socket.emit("set-name", (nickname));
-        displayMessage("Your nickname is now: " + nickname);
-        storage.setItem("nickname", nickname);
-    }
-    if (nameInput.value == '') {
-        const nickname = socket.id.substring(0,6);
-        socket.emit("set-name", nickname);
-        nameInput.value = nickname;
-    }
-}) */
 
 function displayMessage(message) {
     const div = document.createElement("div")
-    div.textContent = message
+    div.textContent = timeSet() + " · " +  message
     div.classList.add("message")
     document.getElementById("message-container").append(div)
 }
 
 function yourMessage(message) {
     const div = document.createElement("div")
-    div.textContent = "You: " + message
+    div.textContent = timeSet() + " · " + "You: " + message
     div.classList.add("you")
     document.getElementById("message-container").append(div)
     
@@ -136,7 +138,7 @@ function populateAll(list) {
     list = list.sort();
     for (const user of list) {
         const li = document.createElement("li")
-        li.textContent = user
+        li.textContent = "🟢" + " " + user
         allList.append(li)
     }
 }
@@ -145,7 +147,26 @@ function populateRoom(list) {
     list = list.sort();
     for (const user of list) {
         const li = document.createElement("li")
-        li.textContent = user
+        li.textContent = "🟢" + " " + user
         roomList.append(li)
     }
 }
+
+messageInput.addEventListener("input", function(){
+
+    if (messageInput.value.length == 1) {
+        socket.emit("is-typing", true)  
+    }
+    else if (messageInput.value.length <= 0)
+    {
+        socket.emit("is-typing", false)  
+    }
+})
+
+socket.on("user-typing", message => {
+    userTyping.textContent = message;
+})
+
+socket.on("user-stop-typing", () => {
+    userTyping.textContent = '';
+})
