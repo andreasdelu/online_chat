@@ -1,7 +1,7 @@
 
 const io = require('socket.io')(3000, {
     cors:{
-        origin:["http://10.44.137.90:8080"]
+        origin:["http://localhost:8080"]
     }
 });
 
@@ -41,7 +41,7 @@ io.on("connection", socket => {
         else if (state === false) {
             io.emit("user-stop-typing")
         }
-    })
+    }) 
 })
 
 async function getSockets() {

@@ -11,7 +11,7 @@ const userTyping = document.getElementById("typing");
 
 
 
-const socket = io("http://10.44.137.90:3000")
+const socket = io("http://localhost:3000")
 
 const storage = window.sessionStorage;
 
